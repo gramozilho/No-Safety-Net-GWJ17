@@ -8,7 +8,6 @@ extents = Vector2( 78.8137, 225.036 )
 
 [node name="Player" type="KinematicBody2D"]
 position = Vector2( 512.464, 187.714 )
-scale = Vector2( 0.5, 0.5 )
 input_pickable = true
 script = ExtResource( 2 )
 
@@ -22,15 +21,32 @@ texture = ExtResource( 1 )
 
 [node name="Docking" type="Node2D" parent="."]
 
-[node name="UpRigth" type="Position2D" parent="Docking"]
+[node name="UpRigth" type="Position2D" parent="Docking" groups=[
+"hide",
+]]
 position = Vector2( 76.7468, -15.3658 )
 
-[node name="UpLeft" type="Position2D" parent="Docking"]
+[node name="UpLeft" type="Position2D" parent="Docking" groups=[
+"grab",
+]]
 position = Vector2( -60.8246, -10.0584 )
 
-[node name="DownRigth" type="Position2D" parent="Docking"]
+[node name="DownRigth" type="Position2D" parent="Docking" groups=[
+"hide",
+]]
 position = Vector2( 48.0299, 238.871 )
 
-[node name="DownLeft" type="Position2D" parent="Docking"]
+[node name="DownLeft" type="Position2D" parent="Docking" groups=[
+"hide",
+]]
 position = Vector2( -38.3866, 237.398 )
+
+[node name="CameraNodeZoom" type="Node2D" parent="."]
+position = Vector2( -201.349, -179.25 )
+scale = Vector2( 0.25, 0.25 )
+
+[node name="Camera" type="Camera2D" parent="."]
+current = true
+
+[node name="Tween" type="Tween" parent="."]
 [connection signal="input_event" from="." to="." method="_on_Player_input_event"]

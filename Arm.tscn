@@ -16,6 +16,7 @@ offset = Vector2( 60, 0 )
 
 [node name="Joint1" parent="Joint0" index="1"]
 position = Vector2( 129.867, 1.02669 )
+rotation = -0.0133579
 
 [node name="LowerSprite" parent="Joint0/Joint1" index="0"]
 scale = Vector2( 1, 0.9 )

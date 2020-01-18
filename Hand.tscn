@@ -1,0 +1,48 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Finger.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Hand.png" type="Texture" id=2]
+[ext_resource path="res://Hand.gd" type="Script" id=3]
+
+[node name="Hand" type="Node2D"]
+scale = Vector2( 0.8, 0.8 )
+script = ExtResource( 3 )
+
+[node name="F1" type="Position2D" parent="."]
+position = Vector2( 2.06998, -29.1191 )
+
+[node name="Finger" parent="F1" instance=ExtResource( 1 )]
+scale = Vector2( 0.8, 1 )
+right_side = false
+
+[node name="F2" type="Position2D" parent="."]
+position = Vector2( 8.3313, -7.54982 )
+
+[node name="Finger2" parent="F2" instance=ExtResource( 1 )]
+scale = Vector2( 0.9, 1 )
+right_side = false
+
+[node name="F3" type="Position2D" parent="."]
+position = Vector2( 5.44082, 14.3687 )
+
+[node name="Finger3" parent="F3" instance=ExtResource( 1 )]
+right_side = false
+
+[node name="F4" type="Position2D" parent="."]
+position = Vector2( 3.20277, 36.2649 )
+
+[node name="Finger4" parent="F4" instance=ExtResource( 1 )]
+scale = Vector2( 1, 1 )
+right_side = false
+
+[node name="T" type="Position2D" parent="."]
+position = Vector2( -34.3228, 40.1173 )
+
+[node name="Finger5" parent="T" instance=ExtResource( 1 )]
+position = Vector2( 0.92659, -7.87596 )
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( -27.562, 5.76721 )
+rotation = 1.5708
+scale = Vector2( 1.25, 1.1 )
+texture = ExtResource( 2 )
