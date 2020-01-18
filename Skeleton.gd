@@ -8,6 +8,7 @@ var dragMouse = false
 var len_upper = 0
 var len_lower = 0
 var target_pos = Vector2()
+var ang_to_target = 0
 
 var climbing_mode = true
 
@@ -25,11 +26,20 @@ func _process(delta):
 	if dragMouse:
 		var current_pos = $Joint0/Joint1/Joint2.global_position
 		var dist_to_target = current_pos.distance_to(target_pos)
-		set_hand_to(target_pos)
+		var base_node
+		if is_in_group('finger'):
+			base_node = get_parent().get_parent().get_parent()
+			print(base_node.name)
+			print(base_node.name, base_node.global_rotation)
+			set_hand_to(target_pos, base_node.global_rotation)
+		else:
+			base_node = get_parent().get_parent().get_parent()
+			#print(base_node.name, base_node.ang_to_target)
+			set_hand_to(target_pos, base_node.global_rotation)
 
-func set_hand_to(hand_destination):
+func set_hand_to(hand_destination, base_rotation=0):
 	var base_to_target = global_position.distance_to(hand_destination)
-	var ang_to_target = hand_destination.angle_to_point(global_position)
+	ang_to_target = hand_destination.angle_to_point(global_position)
 	if base_to_target >= len_upper + len_lower:
 		$Joint0.rotation = ang_to_target
 		$Joint0/Joint1.rotation = 0
@@ -44,6 +54,7 @@ func set_hand_to(hand_destination):
 		else:
 			$Joint0.rotation = ang_to_target + alpha
 			$Joint0/Joint1.rotation = PI + unique_angle
+		#$Joint0/Joint1/Joint2.rotation = $Joint0.rotation
 	# Reorient sprites if needed
 	#print('move hand', $Joint0/Joint1/Joint2.global_position)
 	
@@ -90,3 +101,7 @@ func update_sprites():
 func add_hand(hand):
 	var new_hand = hand.instance()
 	$Joint0/Joint1/Joint2.add_child(new_hand)
+
+func decrease_hand():
+	$Joint0/Joint1/Joint2/Hand/HandCollision.scale *= Vector2(0.5, 0.5)
+	$Joint0/Joint1/Joint2/Hand/HandSprite.scale *= Vector2(0.5, 0.5)

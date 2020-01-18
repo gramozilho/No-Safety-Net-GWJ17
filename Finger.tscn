@@ -8,7 +8,9 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 46.3538
 
-[node name="Finger" instance=ExtResource( 1 )]
+[node name="Finger" groups=[
+"finger",
+] instance=ExtResource( 1 )]
 script = ExtResource( 4 )
 
 [node name="UpperSprite" parent="Joint0" index="0"]

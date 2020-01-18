@@ -10,9 +10,9 @@ extends "res://Skeleton.gd"
 func update_sprites():
 	pass # Replace with function body.
 
-func set_hand_to(hand_destination):
-	var base_to_target = global_position.distance_to(hand_destination) * 2
-	var ang_to_target = hand_destination.angle_to_point(global_position)
+func set_hand_to(hand_destination, base_rotation=0):
+	var base_to_target = global_position.distance_to(hand_destination) / .7
+	var ang_to_target = hand_destination.angle_to_point(global_position) - base_rotation
 	if base_to_target >= len_upper + len_lower:
 		$Joint0.rotation = ang_to_target
 		$Joint0/Joint1.rotation = 0

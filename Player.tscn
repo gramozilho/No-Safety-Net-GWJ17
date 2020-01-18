@@ -45,8 +45,5 @@ position = Vector2( -38.3866, 237.398 )
 position = Vector2( -201.349, -179.25 )
 scale = Vector2( 0.25, 0.25 )
 
-[node name="Camera" type="Camera2D" parent="."]
-current = true
-
 [node name="Tween" type="Tween" parent="."]
 [connection signal="input_event" from="." to="." method="_on_Player_input_event"]

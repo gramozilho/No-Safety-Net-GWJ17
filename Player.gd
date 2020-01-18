@@ -10,6 +10,9 @@ var target_pos = Vector2()
 var original_pos = []
 var body_center_displacement = Vector2()
 var climbing_mode = true
+var charging_mode = false
+var jumping = false
+var falling = false
 
 # Arm object, is upper, is right, starting displacement
 var arm_info = [[arm, true, true, Vector2(40, -30)], [arm, true, false, Vector2(-40, -60)], [leg, false, false, Vector2(30, 150)], [leg, false, true, Vector2(-25, 150)]]
@@ -20,8 +23,8 @@ func _ready():
 		var new_arm = arm_info[i][0].instance()
 		# Change individual params
 		new_arm.upper_body = arm_info[i][1]
-		if dock.is_in_group('grab'):
-			new_arm.add_hand(hand)
+		#if dock.is_in_group('grab'):
+		#	new_arm.add_hand(hand)
 		dock.add_child(new_arm)
 		dock.get_children()[0].right_side = arm_info[i][2]
 		dock.get_children()[0].set_hand_to(dock.global_position + arm_info[i][3])
@@ -43,9 +46,15 @@ func _on_Player_input_event(viewport, event, shape_idx):
 			#Save distance from click to body center
 			body_center_displacement = global_position - get_global_mouse_position()
 			dragBody = true
-	if event.is_action_pressed("ui_select"):
+	elif event.is_action_pressed("click_right"):
+		print('Charging jump')
+		charging_mode = true
+	if event.is_action_pressed("ui_up"):
 		climbing_mode = false
 
+func trigger_death():
+	print('Falling')
+	falling = true
 
 func _input(event):
 	if dragBody and event.is_action_released("click_left"):
@@ -55,12 +64,18 @@ func _input(event):
 	if event is InputEventMouseMotion:
 		# Target is mouse plus displacement from body center
 		target_pos = get_global_mouse_position()
-	if climbing_mode and event.is_action_pressed("ui_select"):
-		climbing_mode = false
-		falling_triggered()
-	elif !climbing_mode and event.is_action_pressed("ui_select"):
-		climbing_mode = true
-		falling_untriggered()
+	if event.is_action_pressed("ui_select"):
+		trigger_death()
+	if event.is_action_released("click_right"):
+		print('Release jump from', get_global_mouse_position())
+		charging_mode = false
+		jumping = true
+	#if climbing_mode and event.is_action_pressed("ui_select"):
+	#	climbing_mode = false
+	#	falling_triggered()
+	#elif !climbing_mode and event.is_action_pressed("ui_select"):
+	#	climbing_mode = true
+	#	falling_untriggered()
 
 
 func falling_triggered():
@@ -78,6 +93,7 @@ func falling_triggered():
 	$Tween.interpolate_property($Camera, "zoom", Vector2(1, 1), Vector2(.25, .25), .5,  Tween.TRANS_QUAD, Tween.EASE_IN)
 	$Tween.start()
 	limb_visibility(false)
+	$Docking/UpLeft.get_children()[0].decrease_hand()
 
 
 func falling_untriggered():
@@ -99,7 +115,7 @@ func limb_visibility(hide_limb):
 
 
 func _process(delta):
-	if climbing_mode and dragBody:
+	if !jumping and climbing_mode and dragBody:
 		# Assure no limb is at its limit
 		var limb_limit = false
 		for dock in $Docking.get_children():
@@ -116,4 +132,11 @@ func _process(delta):
 				i += 1
 			#for dock in $Docking.get_children():
 			#	var limb = dock.get_children()[0]
-			#	limb.set_hand_to(limb.global_position - displacement)
+			#	limb.set_hand_to(limb.global_position - displacement
+	elif jumping:
+		pas
+		
+func _physics_process(delta):
+	if falling:
+		pass
+		#self.move_and_collide(Vector2(0, -1)*delta)
