@@ -29,6 +29,6 @@ position = Vector2( 190.07, -2.0906 )
 shape = SubResource( 1 )
 
 [node name="HandSprite" parent="Joint0/Joint1/Joint2/Hand" index="1"]
-modulate = Color( 1, 0, 0, 0.129412 )
+modulate = Color( 1, 0, 0, 0.513726 )
 z_index = 3
 texture = ExtResource( 2 )

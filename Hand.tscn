@@ -32,7 +32,6 @@ right_side = false
 position = Vector2( 3.20277, 36.2649 )
 
 [node name="Finger4" parent="F4" instance=ExtResource( 1 )]
-scale = Vector2( 1, 1 )
 right_side = false
 
 [node name="T" type="Position2D" parent="."]

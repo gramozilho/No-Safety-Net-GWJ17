@@ -1,13 +1,210 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Player.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Main.gd" type="Script" id=2]
+[ext_resource path="res://Assets/RockWall.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Bg_normal.png" type="Texture" id=4]
+[ext_resource path="res://Assets/link.png" type="Texture" id=5]
+[ext_resource path="res://Shop.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Assets/tree_bg.png" type="Texture" id=8]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 234.554, 150.574 )
 
 [node name="Main" type="Node2D"]
+script = ExtResource( 2 )
 
 [node name="Player" parent="." instance=ExtResource( 1 )]
-position = Vector2( 2047.35, 1588.02 )
+position = Vector2( 2784.65, 2059.39 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 anchor_mode = 0
 current = true
-zoom = Vector2( 4, 4 )
+zoom = Vector2( 5, 5 )
+
+[node name="Background" type="Sprite" parent="."]
+modulate = Color( 1, 1, 1, 0.368627 )
+light_mask = 3
+position = Vector2( 2586.6, 1502.04 )
+scale = Vector2( 2.07491, 1.66397 )
+z_index = -3
+texture = ExtResource( 3 )
+normal_map = ExtResource( 4 )
+
+[node name="Light2D" type="Light2D" parent="."]
+position = Vector2( 2393.19, 1662.77 )
+scale = Vector2( 75.6507, 185.849 )
+z_index = 6
+texture = ExtResource( 5 )
+color = Color( 0.313726, 0.203922, 0.027451, 1 )
+energy = 1.68
+mode = 2
+range_item_cull_mask = 2
+
+[node name="Boundaries" type="Area2D" parent="."]
+position = Vector2( 37.2207, 37.2207 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Boundaries"]
+position = Vector2( -279.865, -325.09 )
+scale = Vector2( 1.12503, 1.26153 )
+polygon = PoolVector2Array( -15.0151, -3.98706, 792.124, -2931.57, 4130.12, -2972.62, 5046.7, 50.7341, 5046.7, 2937.28, 80.7471, 2896.24, 121.788, -99.7493, -274.941, -58.7085, -411.744, 3429.77, 5648.64, 3429.77, 5840.16, -345.995, 4622.61, -3383.02, 203.87, -3383.02, -452.785, -195.511 )
+
+[node name="CrashCoord" type="Position2D" parent="."]
+position = Vector2( 2568.69, 645.104 )
+
+[node name="FirstScene" type="Node2D" parent="."]
+
+[node name="TreeBg" type="Sprite" parent="FirstScene"]
+position = Vector2( 2577.27, 1320.99 )
+scale = Vector2( 3.059, 1.38589 )
+z_index = -3
+texture = ExtResource( 8 )
+
+[node name="FirstScene" type="Area2D" parent="FirstScene/TreeBg"]
+position = Vector2( -3.2876, -87.0743 )
+scale = Vector2( 1.20931, 0.917809 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="FirstScene/TreeBg/FirstScene"]
+position = Vector2( 1710.1, -397.774 )
+polygon = PoolVector2Array( -1976.56, 1299.25, -1803.58, -862.414, -1589.37, -842.896, -1526.12, 1034.53, -1561.01, 1684.41, -1883.8, 1689.22, -1935.33, 1520.73, -2161.6, 1337.99, -2157.35, 2322.64, -1107.96, 2275.75, -1133.45, -1287.74, -2127.61, -1212.72, -2153.1, 1244.21, -1920.06, 1564.06 )
+
+[node name="BranchArea" type="Area2D" parent="FirstScene/TreeBg"]
+position = Vector2( 18.1335, 190.706 )
+scale = Vector2( 1.20931, 0.917809 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FirstScene/TreeBg/BranchArea"]
+position = Vector2( 30.9987, -753.42 )
+shape = SubResource( 1 )
+
+[node name="Menu" type="Control" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 40.0
+rect_scale = Vector2( 0.977872, 0.979446 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Restart" type="Button" parent="Menu"]
+margin_left = 4164.87
+margin_top = 2120.59
+margin_right = 4232.87
+margin_bottom = 2140.59
+rect_scale = Vector2( 13.3411, 11.9805 )
+text = "Try again"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Shop" type="Button" parent="Menu"]
+margin_left = 4286.96
+margin_top = 2459.09
+margin_right = 4345.96
+margin_bottom = 2479.09
+rect_scale = Vector2( 13.3411, 11.9805 )
+text = "  Shop  "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Score" type="Label" parent="Menu"]
+margin_left = 2809.57
+margin_top = 2771.7
+margin_right = 3014.57
+margin_bottom = 2785.7
+rect_scale = Vector2( 10.976, 13.1533 )
+text = "Money: 0"
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Help" type="Label" parent="Menu"]
+margin_left = 256.929
+margin_top = 230.232
+margin_right = 750.929
+margin_bottom = 346.232
+rect_scale = Vector2( 9.79924, 11.7544 )
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "Clean vegetation to earn money. Spend this money on body upgrades.
+Avoid falling rocks and the edges of the screen
+
+Instructions:
+- LEFT MOUSE (click) on shop to spend money.
+- LEFT MOUSE (click and drag) to move player body, hands and feet (red circles)
+- RIGHT MOUSE (click and drag) to jump from mouse to character direction
+- Press U to zoom next to hand and see full hand
+- Press H to show/hide this help text"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MenuFirst" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+rect_scale = Vector2( 0.977872, 0.979446 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Start" type="Button" parent="MenuFirst"]
+margin_left = 4315.68
+margin_top = 2596.54
+margin_right = 4372.68
+margin_bottom = 2616.54
+rect_scale = Vector2( 13.3411, 11.9805 )
+text = "Start"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Help1" type="Label" parent="MenuFirst"]
+margin_left = 256.929
+margin_top = 215.53
+margin_right = 742.93
+margin_bottom = 331.53
+rect_scale = Vector2( 9.71671, 10.0204 )
+size_flags_stretch_ratio = 0.0
+custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
+text = "There is a cat stuck in the tree.
+Can you climb up and get it?
+
+LEFT CLICK to drag red circles.
+"
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="Garage" type="Node2D" parent="."]
+
+[node name="ThingSpawn" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="BoulderSpawn" type="Timer" parent="."]
+wait_time = 5.0
+
+[node name="PlayerSpawn" type="Position2D" parent="."]
+position = Vector2( 2484.49, 2173.97 )
+
+[node name="Shop" parent="." instance=ExtResource( 7 )]
+visible = false
+margin_left = 2193.35
+margin_top = 3354.14
+margin_right = 2193.35
+margin_bottom = 3354.14
+rect_scale = Vector2( 5.77419, 5.6377 )
+[connection signal="crash" from="." to="Player" method="_on_Main_crash"]
+[connection signal="jump" from="Player" to="." method="_on_Player_jump"]
+[connection signal="body_entered" from="Boundaries" to="." method="_on_Boundaries_body_entered"]
+[connection signal="body_entered" from="FirstScene/TreeBg/FirstScene" to="." method="_on_FirstScene_body_entered"]
+[connection signal="body_entered" from="FirstScene/TreeBg/BranchArea" to="." method="_on_BranchArea_body_entered"]
+[connection signal="pressed" from="Menu/Restart" to="." method="_on_Restart_pressed"]
+[connection signal="pressed" from="Menu/Shop" to="." method="_on_Shop_pressed"]
+[connection signal="pressed" from="MenuFirst/Start" to="." method="_on_Start_pressed"]
+[connection signal="timeout" from="ThingSpawn" to="." method="_on_ThingSpawn_timeout"]
+[connection signal="timeout" from="BoulderSpawn" to="." method="_on_BoulderSpawn_timeout"]
+[connection signal="buy" from="Shop" to="." method="_on_Shop_buy"]
+[connection signal="upgrade" from="Shop" to="Player" method="_on_Shop_upgrade"]

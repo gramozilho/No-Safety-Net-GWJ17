@@ -9,6 +9,7 @@ var len_upper = 0
 var len_lower = 0
 var target_pos = Vector2()
 var ang_to_target = 0
+var moving_target = Vector2()
 
 var climbing_mode = true
 
@@ -67,7 +68,7 @@ func set_hand_to(hand_destination, base_rotation=0):
 
 func _input(event):
 	if dragMouse and event.is_action_released("click_left"):
-		print('Hand Released')
+		#print('Hand Released')
 		dragMouse = false
 	if event is InputEventMouseMotion:
 		target_pos = get_global_mouse_position()
@@ -76,7 +77,7 @@ func _input(event):
 func _on_Hand_input_event(viewport, event, shape_idx):
 	if climbing_mode:
 		if event.is_action_pressed("click_left"):
-			print('Hand Pressed!')
+			#print('Hand Pressed!')
 			dragMouse = true
 
 func get_hand_position():
@@ -99,9 +100,22 @@ func update_sprites():
 	$Joint0/Joint1/LowerSprite.flip_v = !right_side
 
 func add_hand(hand):
+	print('Hand!')
 	var new_hand = hand.instance()
+	new_hand.visible = false
 	$Joint0/Joint1/Joint2.add_child(new_hand)
 
 func decrease_hand():
 	$Joint0/Joint1/Joint2/Hand/HandCollision.scale *= Vector2(0.5, 0.5)
 	$Joint0/Joint1/Joint2/Hand/HandSprite.scale *= Vector2(0.5, 0.5)
+
+func show_hand():
+	$Joint0/Joint1/Joint2.get_children()[1].visible = true
+	$Joint0/Joint1/Joint2/Hand/HandCollision.scale *= Vector2(0.5, 0.5)
+	$Joint0/Joint1/Joint2/Hand/HandSprite.scale *= Vector2(0.5, 0.5)
+
+func hide_hand():
+	$Joint0/Joint1/Joint2.get_children()[1].visible  = false
+	$Joint0/Joint1/Joint2/Hand/HandCollision.scale *= Vector2(2, 2)
+	$Joint0/Joint1/Joint2/Hand/HandSprite.scale *= Vector2(2, 2)
+	

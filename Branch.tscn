@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Boulder.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Assets/Branch.png" type="Texture" id=2]
+[ext_resource path="res://Branch.gd" type="Script" id=3]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 52.4388
+height = 863.349
+
+[node name="Branch" instance=ExtResource( 1 )]
+contact_monitor = true
+angular_velocity = 1.0
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2( -2.27197, 31.8091 )
+rotation = 1.48821
+shape = SubResource( 1 )
+
+[node name="Boulder" parent="." index="1"]
+modulate = Color( 0.352941, 0.352941, 0.352941, 1 )
+texture = ExtResource( 2 )
