@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://Assets/body.png" type="Texture" id=1]
 [ext_resource path="res://Player.gd" type="Script" id=2]
 [ext_resource path="res://Assets/ring.png" type="Texture" id=3]
 [ext_resource path="res://Assets/arrow.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Pickup.png" type="Texture" id=5]
+[ext_resource path="res://Sounds/Rubble_Breaking.wav" type="AudioStream" id=6]
+[ext_resource path="res://Sounds/Dumping_Gravel.wav" type="AudioStream" id=7]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 84.0059
@@ -88,5 +90,19 @@ offset = Vector2( 286, 3 )
 [node name="JumpTimer" type="Timer" parent="."]
 wait_time = 5.0
 one_shot = true
+
+[node name="GetHit" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+max_distance = 4000.0
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 6 )
+max_distance = 4000.0
+
+[node name="Gravel" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource( 7 )
+volume_db = -10.0
+max_distance = 4000.0
+attenuation = 0.535887
 [connection signal="input_event" from="." to="." method="_on_Player_input_event"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_Area2D_body_entered"]

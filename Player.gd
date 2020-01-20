@@ -83,6 +83,7 @@ func _input(event):
 			# Target is mouse plus displacement from body center
 			target_pos = get_global_mouse_position()
 		if jumping and event.is_action_pressed("click"):
+			$Gravel.play()
 			if jump_timer:
 				$JumpTimer.start()
 				jump_loading()
@@ -92,6 +93,7 @@ func _input(event):
 				charging_mode = true
 				$Arrow.visible = true
 		elif can_jump and event.is_action_released("click_right") and $JumpTimer.is_stopped():
+			$Jump.play()
 			print('Release jump from', get_global_mouse_position())
 			charging_mode = false
 			$Arrow.visible = false
@@ -209,6 +211,7 @@ func set_hands_to(arr):
 
 
 func _on_Main_crash(center_direction):
+	$GetHit.play()
 	crash_vector = center_direction
 	crashing = true
 	falling = false
@@ -236,6 +239,7 @@ func _on_Shop_upgrade(option):
 		2:
 			print('Upgrade 3: INFINITE JUMP')
 			jump_timer = false
+			get_parent().jump_infinite()
 		3:
 			print('Uprade 4: INVINCIBLE')
 			invincible = true

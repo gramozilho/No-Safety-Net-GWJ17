@@ -14,6 +14,7 @@ var crashed = false
 var new_score
 var total_score = 0
 var hands_mode = false
+var play_once = true
 
 
 const SPAWN_WINDOW = [[300, 4800], [300, 2700]]
@@ -36,6 +37,7 @@ func _ready():
 	$FirstScene/TreeBg/BranchArea/CollisionShape2D.disabled = false
 	$Shop.visible = false
 	$Menu/Help.text = help_text_1
+	$BG_1.play()
 
 func _input(event):
 	if event.is_action_pressed("reset"):
@@ -77,9 +79,12 @@ func _on_Boundaries_body_entered(body):
 
 func _on_Restart_pressed():
 	reset_player_and_game()
+	$Button.play()
+	
 	#get_tree().reload_current_scene()
 
 func handle_pickup():
+	$Pickup.play()
 	if $BoulderSpawn.is_stopped():
 		$BoulderSpawn.start()
 	#print('Score: ', score)
@@ -134,6 +139,11 @@ func reset_player_and_game():
 	$Player.reset_limbs()
 	$Shop.visible = false
 	$Player.z_index = 0
+	if play_once:
+		play_once = false
+		$BG_1.stop()
+		$Ambulance.stop()
+		$BG.play()
 
 func stop_game_loop():
 	$ThingSpawn.stop()
@@ -149,6 +159,8 @@ func _on_Shop_pressed():
 		$Shop.visible = true
 		$Player.z_index = -1
 		$Shop.update_money(total_score)
+		$Button.play()
+		$Shop/VBoxContainer2/Feedback.text = ""
 
 func _on_FirstScene_body_entered(body):
 	if body.is_in_group('player'):
@@ -170,6 +182,8 @@ func first_scene_drop():
 	#	first = "You fell from the tree at an embarrassingly low altitue.\nEverybody saw. They say you weren't even trying to go up. Or are you just that clumsy?"
 	#$MenuFirst/Help1.text = "You fell from the tree and hurt yourself really bad, injuring all your arms and legs. All yout limbs are now prosthetics.\nYou can still fall, but since these limbs are now quite durable you can never break them.\n\nWith this new found durability you become a professional cleaner for rock-climbing. Collect enought rubbish and  , '.\nYou become a \n\nTL;DR: Collect objects to earn cash. Spend cash on body upgrades."
 	$MenuFirst/Help1.text = "You fell from the tree and hurt yourself really bad.\nAll your arms and legs are injuried and have been replaced by prosthetics.\nNo matter how hard the fall, these limbs are now indestructible.\n\nWith this newfound durability you get a job cleaning vegetation off rock climbing walls.\nClean enough and you might just be able to afford fancier limbs.\n\n\nTL;DR: Collect objects to earn cash. Spend cash on body upgrades.\nPress H to show/hide help"
+	$Ambulance.play()
+	$BG_1.volume_db -= 10
 
 func _on_Start_pressed():
 	reset_player_and_game()
@@ -177,6 +191,7 @@ func _on_Start_pressed():
 	$FirstScene.visible = false
 	$FirstScene/TreeBg/FirstScene/CollisionPolygon2D.disabled = true
 	$FirstScene/TreeBg/BranchArea/CollisionShape2D.disabled= true
+	$Button.play()
 
 
 func _on_BranchArea_body_entered(body):
@@ -205,3 +220,10 @@ func activate_hands():
 
 func jump_help():
 	$Menu/Help.text = help_text
+	$ThingSpawn.wait_time = 3
+	$BoulderSpawn.wait_time = 4
+
+func jump_infinite():
+	$Menu/Help.text = help_text
+	$ThingSpawn.wait_time = 2
+	$BoulderSpawn.wait_time = 3

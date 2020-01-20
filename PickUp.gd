@@ -17,6 +17,7 @@ func _ready():
 	random_color()
 	$Timer.wait_time = ALIVE_TIME
 	$Timer.start()
+	$Grabbed.play()
 
 func random_color():
 	$Sprite.modulate = Color(22.0/255.0, (randi()%111+75)/255.0, 30/255.0, .8)
