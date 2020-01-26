@@ -144,6 +144,7 @@ func reset_player_and_game():
 		$BG_1.stop()
 		$Ambulance.stop()
 		$BG.play()
+	$Menu/Help.visible = true
 
 func stop_game_loop():
 	$ThingSpawn.stop()
